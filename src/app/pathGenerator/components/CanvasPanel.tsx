@@ -8,11 +8,11 @@ interface CanvasPanelProps {
   onUpdatePoint: (id: string, x: number, y: number) => void;
 }
 
-export function CanvasPanel({ 
-  paths, 
-  viewBox, 
-  onAddPoint, 
-  onUpdatePoint 
+export function CanvasPanel({
+  paths,
+  viewBox,
+  onAddPoint,
+  onUpdatePoint
 }: CanvasPanelProps) {
   const handleAddPoint = (e: React.MouseEvent<SVGSVGElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -23,11 +23,20 @@ export function CanvasPanel({
 
   return (
     <div className="flex-1 border-r bg-white dark:bg-gray-900 p-4">
-      <svg 
+      <svg
         viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
         className="w-full h-full cursor-crosshair"
         onClick={handleAddPoint}
       >
+        <rect width={viewBox.width} height={viewBox.height} fill="white" x="0" y="0" />
+        <g stroke="#eee" strokeWidth="0.1">
+          {Array.from({ length: viewBox.height + 1 }).map((_, y) => (
+            <line key={`h${y}`} x1={0} y1={y} x2={viewBox.width} y2={y} />
+          ))}
+          {Array.from({ length: viewBox.width + 1 }).map((_, x) => (
+            <line key={`v${x}`} x1={x} y1={0} x2={x} y2={viewBox.height} />
+          ))}
+        </g>
         {paths.map((path, pathIndex) => (
           <g key={pathIndex}>
             <path
@@ -48,7 +57,7 @@ export function CanvasPanel({
                   e.stopPropagation();
                   const startX = e.clientX;
                   const startY = e.clientY;
-                  
+
                   const onMouseMove = (moveEvent: MouseEvent) => {
                     onUpdatePoint(
                       point.id,

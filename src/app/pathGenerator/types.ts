@@ -1,5 +1,8 @@
-export interface PathPoint {
+// 添加ID生成函数
+export type PathPoint = {
+  id: string;
   x: number;
   y: number;
-  id: string;
-}
+};
+
+export const generateId = () => Math.random().toString(36).substr(2, 9);

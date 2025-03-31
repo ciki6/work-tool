@@ -33,13 +33,13 @@ export function EditorPanel({
                 <div className="grid grid-cols-2 gap-2">
                   <input
                     type="number"
-                    value={Math.round(point.x)}
+                    value={point.x}  // 移除 Math.round()
                     onChange={(e) => onUpdatePoint(point.id, +e.target.value, point.y)}
                     className="w-full p-1 text-sm border rounded"
                   />
                   <input
                     type="number"
-                    value={Math.round(point.y)}
+                    value={point.y}  // 移除 Math.round()
                     onChange={(e) => onUpdatePoint(point.id, point.x, +e.target.value)}
                     className="w-full p-1 text-sm border rounded"
                   />
